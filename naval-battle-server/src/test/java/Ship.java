@@ -6,8 +6,8 @@ public class Ship {
         this.size = size;
     }
 
-    public int size() {
-        return size;
+    public static Part part() {
+        return new Part();
     }
 
     @Override
@@ -17,4 +17,15 @@ public class Ship {
         return ship.size == size;
     }
 
+    public Chain chain() {
+        Chain chain = new Chain();
+
+        for (int i = 0; i < size; i++)
+            chain.add(new Part());
+
+        return chain;
+    }
+
+    protected static class Part {
+    }
 }

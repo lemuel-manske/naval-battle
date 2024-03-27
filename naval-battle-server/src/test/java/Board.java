@@ -8,12 +8,12 @@ public class Board {
     }
 
     public void placeShipHorizontal(Ship ship, Point p) {
-        for (int i = 0; i < ship.size(); i++)
+        for (int i = 0; i < ship.chain().size(); i++)
             placeShip(new Point(p.x(), p.y() + i), ship);
     }
 
     public void placeShipVertical(Ship ship, Point p) {
-        for (int i = 0; i < ship.size(); i++)
+        for (int i = 0; i < ship.chain().size(); i++)
             placeShip(new Point(p.x() + i, p.y()), ship);
     }
 
