@@ -1,5 +1,3 @@
-import java.awt.*;
-
 public class Board {
 
     private final Ship[][] grid;
