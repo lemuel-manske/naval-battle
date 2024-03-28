@@ -26,7 +26,7 @@ public class BoardTest {
 
     @Test
     void placeShip() {
-        Ship destroyer = new Destroyer(); // Size 2 ship
+        Ship destroyer = new Destroyer();
         board.placeShip(destroyer, "B-5");
 
         assertEquals(destroyer, board.shipAt("B-5"));
@@ -38,10 +38,10 @@ public class BoardTest {
     void doNotAllowShipsSideBySide() {
         board.placeShip(new Destroyer(), "A-4");
 
-        assertThrows(InvalidPosition.class,
+        assertThrows(InvalidPosition.class, // Submarine will overflow Destroyer
                 () -> board.placeShip(new Submarine(), "A-2"));
 
-        assertThrows(InvalidPosition.class,
+        assertThrows(InvalidPosition.class, // Submarine can not touch Destroyer
                 () -> board.placeShip(new Submarine(), "B-5"));
     }
 
