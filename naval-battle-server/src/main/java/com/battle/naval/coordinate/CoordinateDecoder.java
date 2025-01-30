@@ -1,5 +1,8 @@
 package com.battle.naval.coordinate;
 
+import com.battle.naval.coordinate.Coordinate;
+import com.battle.naval.coordinate.InvalidCoordinates;
+
 public class CoordinateDecoder {
 
     public static Coordinate decode(String encoded) {
