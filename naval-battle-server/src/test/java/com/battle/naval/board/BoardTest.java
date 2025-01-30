@@ -37,6 +37,13 @@ public class BoardTest {
             assertEquals(destroyer, board.shipAt(Coordinate.valueOf(new int[]{ 1, 5 })));
             assertEquals(destroyer, board.shipAt(Coordinate.valueOf(new int[]{ 1, 6 })));
             assertEquals(destroyer, board.shipAt(Coordinate.valueOf(new int[]{ 1, 7 })));
+
+            Ship submarine = new Submarine();
+
+            board.placeShip(submarine, Coordinate.valueOf(new int[]{ 3, 3 }));
+
+            assertEquals(submarine, board.shipAt(Coordinate.valueOf(new int[]{ 3, 3 })));
+            assertEquals(submarine, board.shipAt(Coordinate.valueOf(new int[]{ 3, 4 })));
         }
 
         @Test
