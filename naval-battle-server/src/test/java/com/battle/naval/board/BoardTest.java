@@ -25,7 +25,7 @@ public class BoardTest {
     }
 
     @Test
-    void placeShip() {
+    void placeShip() throws InvalidPosition {
         Ship destroyer = new Destroyer();
         board.placeShip(destroyer, "B-5");
 
@@ -35,7 +35,7 @@ public class BoardTest {
     }
 
     @Test
-    void doNotAllowShipsSideBySide() {
+    void doNotAllowShipsSideBySide() throws InvalidPosition {
         board.placeShip(new Destroyer(), "A-4");
 
         assertThrows(InvalidPosition.class, // Submarine will overflow Destroyer

@@ -1,15 +1,17 @@
 package com.battle.naval.ship;
 
 
-public abstract class Ship {
+public sealed abstract class Ship permits Destroyer, Submarine  {
 
-    public abstract int size();
+    abstract int size();
 
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
-        Ship ship = (Ship) obj;
-        return ship.size() == size();
+        if (obj == this) return true;
+        if (obj.getClass() != this.getClass()) return false;
+        Destroyer that = (Destroyer) obj;
+        return this.size() == that.size();
     }
 
 }

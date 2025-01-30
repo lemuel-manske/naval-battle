@@ -18,15 +18,15 @@ public class Board {
         this(squareSize, squareSize);
     }
 
-    public Ship shipAt(String encodedCoordinate) {
+    public Ship shipAt(String encodedCoordinate) throws InvalidPosition {
         return fleet.findShip(decode(encodedCoordinate));
     }
 
-    public void placeShip(Ship ship, String encodedCoordinate) {
+    public void placeShip(Ship ship, String encodedCoordinate) throws InvalidPosition {
         fleet.placeShip(ship, decode(encodedCoordinate));
     }
 
-    private Coordinate decode(String encodedCoordinate) {
+    private Coordinate decode(String encodedCoordinate) throws InvalidPosition {
         Coordinate coordinate = CoordinateDecoder.decode(encodedCoordinate);
 
         if (coordinate.x() > fleet.rows && coordinate.y() > fleet.columns)
@@ -52,7 +52,7 @@ public class Board {
             return fleet[c.x()][c.y()];
         }
 
-        public void placeShip(Ship ship, Coordinate headCoordinate) {
+        public void placeShip(Ship ship, Coordinate headCoordinate) throws InvalidPosition {
             Coordinate[] shipCoordinates = makeCoordinatesChain(ship, headCoordinate);
 
             if (!canShipBePlacedHere(shipCoordinates))

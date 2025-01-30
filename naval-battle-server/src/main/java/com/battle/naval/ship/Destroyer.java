@@ -1,6 +1,6 @@
 package com.battle.naval.ship;
 
-public class Destroyer extends Ship {
+public final class Destroyer extends Ship {
 
     @Override
     public int size() {
