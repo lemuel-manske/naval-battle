@@ -22,11 +22,26 @@ class BoardTest {
 
     @Test
     void whenShipIsPlacedThenBoardIsNotEmpty() {
-        Ship ship = new Ship();
+        Ship ship = new Ship(1);
 
-        board.placeShip(ship);
+        board.placeShip(ship, "A-1");
 
         assertFalse(board.isEmpty());
     }
 
+    @Test
+    void placeShip() {
+        Ship ship = new Ship(3);
+
+        board.placeShip(ship, "A-1-H");
+
+        assertOccupiedAt("A-1", "A-2", "A-3");
+
+        assertFalse(board.isOccupiedAt("A-4"));
+    }
+
+    private void assertOccupiedAt(String... coordinates) {
+        for (String coordinate : coordinates)
+            assertTrue(board.isOccupiedAt(coordinate));
+    }
 }
