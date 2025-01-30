@@ -9,9 +9,9 @@ public class CoordinateTest {
 
     @Test
     void testInvalidEncodes() {
-        assertThrows(InvalidCoordinates.class, () -> CoordinateDecoder.decode("8-1"));
-        assertThrows(InvalidCoordinates.class, () -> CoordinateDecoder.decode("A-B"));
-        assertThrows(InvalidCoordinates.class, () -> CoordinateDecoder.decode("Z-12"));
+        assertThrows(InvalidCoordinates.class, () -> Coordinate.decode("8-1"));
+        assertThrows(InvalidCoordinates.class, () -> Coordinate.decode("A-B"));
+        assertThrows(InvalidCoordinates.class, () -> Coordinate.decode("Z-12"));
     }
 
     @Test
@@ -21,7 +21,7 @@ public class CoordinateTest {
     }
 
     private static void assertDecoded(Coordinate expectedCoordinate, String encoded) {
-        Coordinate decoded = CoordinateDecoder.decode(encoded);
+        Coordinate decoded = Coordinate.decode(encoded);
         assertEquals(expectedCoordinate, decoded);
     }
 

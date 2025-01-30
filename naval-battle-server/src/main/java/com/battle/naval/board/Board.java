@@ -1,7 +1,6 @@
 package com.battle.naval.board;
 
 import com.battle.naval.coordinate.Coordinate;
-import com.battle.naval.coordinate.CoordinateDecoder;
 import com.battle.naval.ship.Ship;
 
 public class Board {
@@ -27,7 +26,7 @@ public class Board {
     }
 
     private Coordinate decode(String encodedCoordinate) throws InvalidPosition {
-        Coordinate coordinate = CoordinateDecoder.decode(encodedCoordinate);
+        Coordinate coordinate = Coordinate.decode(encodedCoordinate);
 
         if (coordinate.x() > fleet.rows && coordinate.y() > fleet.columns)
             throw new InvalidPosition();

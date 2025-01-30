@@ -3,7 +3,7 @@ package com.battle.naval.ship;
 
 public sealed abstract class Ship permits Destroyer, Submarine  {
 
-    abstract int size();
+    public abstract int size();
 
     @Override
     public boolean equals(Object obj) {
