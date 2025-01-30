@@ -1,5 +1,6 @@
 package com.battle.naval.board;
 
+import com.battle.naval.coordinate.Coordinate;
 import com.battle.naval.ship.Destroyer;
 import com.battle.naval.ship.Ship;
 import com.battle.naval.ship.Submarine;
@@ -30,22 +31,23 @@ public class BoardTest {
         @Test
         void placeShip() throws InvalidPosition {
             Ship destroyer = new Destroyer();
-            board.placeShip(destroyer, "B-5");
 
-            assertEquals(destroyer, board.shipAt("B-5"));
-            assertEquals(destroyer, board.shipAt("B-6"));
-            assertEquals(destroyer, board.shipAt("B-7"));
+            board.placeShip(destroyer, Coordinate.valueOf(new int[]{ 1, 5 }));
+
+            assertEquals(destroyer, board.shipAt(Coordinate.valueOf(new int[]{ 1, 5 })));
+            assertEquals(destroyer, board.shipAt(Coordinate.valueOf(new int[]{ 1, 6 })));
+            assertEquals(destroyer, board.shipAt(Coordinate.valueOf(new int[]{ 1, 7 })));
         }
 
         @Test
         void doNotAllowShipsSideBySide() throws InvalidPosition {
-            board.placeShip(new Destroyer(), "A-4");
+            board.placeShip(new Destroyer(), Coordinate.valueOf(new int[]{ 0, 3 }));
 
             assertThrows(InvalidPosition.class, // Submarine will overflow Destroyer
-                    () -> board.placeShip(new Submarine(), "A-2"));
+                    () -> board.placeShip(new Submarine(), Coordinate.valueOf(new int[]{ 0, 2 })));
 
             assertThrows(InvalidPosition.class, // Submarine can not touch Destroyer
-                    () -> board.placeShip(new Submarine(), "B-5"));
+                    () -> board.placeShip(new Submarine(), Coordinate.valueOf(new int[]{ 1, 4 })));
         }
 
     }

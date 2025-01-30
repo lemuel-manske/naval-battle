@@ -7,27 +7,26 @@ public class Board {
 
     private final Fleet fleet;
 
-    public Board(int rows, int columns) {
-        if (rows > 15 || rows < 10)
-            throw new InvalidBoardSize();
-        this.fleet = new Fleet(rows, columns);
-    }
-
     public Board(int squareSize) {
         this(squareSize, squareSize);
     }
 
-    public Ship shipAt(String encodedCoordinate) throws InvalidPosition {
-        return fleet.findShip(decode(encodedCoordinate));
+    public Board(int rows, int columns) {
+        if (rows > 15 || rows < 10)
+            throw new InvalidBoardSize();
+
+        this.fleet = new Fleet(rows, columns);
     }
 
-    public void placeShip(Ship ship, String encodedCoordinate) throws InvalidPosition {
-        fleet.placeShip(ship, decode(encodedCoordinate));
+    public Ship shipAt(Coordinate coords) throws InvalidPosition {
+        return fleet.findShip(getCoordsIfValid(coords));
     }
 
-    private Coordinate decode(String encodedCoordinate) throws InvalidPosition {
-        Coordinate coordinate = Coordinate.decode(encodedCoordinate);
+    public void placeShip(Ship ship, Coordinate coords) throws InvalidPosition {
+        fleet.placeShip(ship, getCoordsIfValid(coords));
+    }
 
+    private Coordinate getCoordsIfValid(Coordinate coordinate) throws InvalidPosition {
         if (coordinate.x() > fleet.rows && coordinate.y() > fleet.columns)
             throw new InvalidPosition();
 
@@ -47,8 +46,8 @@ public class Board {
             this.fleet = new Ship[rows][columns];
         }
 
-        public Ship findShip(Coordinate c) {
-            return fleet[c.x()][c.y()];
+        public Ship findShip(Coordinate coords) {
+            return fleet[coords.x()][coords.y()];
         }
 
         public void placeShip(Ship ship, Coordinate headCoordinate) throws InvalidPosition {
