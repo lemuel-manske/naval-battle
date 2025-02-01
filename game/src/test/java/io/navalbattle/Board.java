@@ -11,7 +11,7 @@ public class Board {
 
     public Board(int size) {
         this.size = size;
-        board = new Ship[size][size];
+        this.board = new Ship[size][size];
     }
 
     public boolean isPosFree(final Coordinate c) {
@@ -21,8 +21,6 @@ public class Board {
     }
 
     public void placeShip(final Ship ship, final Coordinate c) {
-        requireInBounds(c);
-
         if (!isPosFree(c)) {
             throw new IllegalArgumentException("Coordinate occupied");
         }
@@ -41,5 +39,4 @@ public class Board {
             throw  new IllegalArgumentException("Coordinate out of bounds");
         }
     }
-
 }
