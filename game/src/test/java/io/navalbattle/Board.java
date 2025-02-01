@@ -17,6 +17,10 @@ public class Board {
     }
 
     public void placeShip(final Ship ship, final Coordinate c) {
+        if (board[c.x()][c.y()] != null) {
+            throw new IllegalArgumentException("Coordinate occupied");
+        }
+
         board[c.x()][c.y()] = ship;
     }
 
