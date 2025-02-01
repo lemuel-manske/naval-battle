@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameTest {
@@ -23,15 +24,29 @@ class GameTest {
 
     @Test
     void testPositionFreeWhenEmptyBoard() {
-        assertFalse(board.isPosFree(0,0));
+        Coordinate c = new Coordinate(1,2);
+        assertFalse(board.isPosFree(c));
     }
     
     @Test
     void testPlaceShipThenPositionNotFree() {
         Ship ship = new Ship();
 
-        board.placeShip(ship, 0, 0);
+        Coordinate start = new Coordinate(0, 0);
 
-        assertTrue(board.isPosFree(0,0));
+        board.placeShip(ship, start);
+
+        assertTrue(board.isPosFree(start));
+    }
+
+    @Test
+    void testShipAtPositionAfterPlacing() {
+        Ship ship = new Ship();
+
+        Coordinate start = new Coordinate(0, 0);
+
+        board.placeShip(ship, start);
+
+        assertSame(ship, board.shipAt(start));
     }
 }
