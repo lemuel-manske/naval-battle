@@ -2,6 +2,7 @@ package io.navalbattle;
 
 public class Board {
 
+    private final int size;
     private final Ship[][] board;
 
     public Board() {
@@ -9,15 +10,20 @@ public class Board {
     }
 
     public Board(int size) {
+        this.size = size;
         board = new Ship[size][size];
     }
 
     public boolean isPosFree(final Coordinate c) {
-        return board[c.x()][c.y()] != null;
+        requireInBounds(c);
+
+        return board[c.x()][c.y()] == null;
     }
 
     public void placeShip(final Ship ship, final Coordinate c) {
-        if (board[c.x()][c.y()] != null) {
+        requireInBounds(c);
+
+        if (!isPosFree(c)) {
             throw new IllegalArgumentException("Coordinate occupied");
         }
 
@@ -25,6 +31,15 @@ public class Board {
     }
 
     public Ship shipAt(final Coordinate c) {
+        requireInBounds(c);
+
         return board[c.x()][c.y()];
     }
+
+    private void requireInBounds(Coordinate c) {
+        if (c.x() > size || c.y() > size) {
+            throw  new IllegalArgumentException("Coordinate out of bounds");
+        }
+    }
+
 }

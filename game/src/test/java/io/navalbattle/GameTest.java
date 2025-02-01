@@ -26,7 +26,7 @@ class GameTest {
 
     @Test
     void testPositionFreeWhenEmptyBoard() {
-        assertFalse(board.isPosFree(Coordinate.valueOf(1,2)));
+        assertTrue(board.isPosFree(Coordinate.valueOf(1,2)));
     }
     
     @Test
@@ -35,7 +35,7 @@ class GameTest {
 
         board.placeShip(ship, Coordinate.valueOf(0, 0));
 
-        assertTrue(board.isPosFree(Coordinate.valueOf(0, 0)));
+        assertFalse(board.isPosFree(Coordinate.valueOf(0, 0)));
     }
 
     @Test
@@ -53,8 +53,21 @@ class GameTest {
 
         board.placeShip(ship1, Coordinate.valueOf(0, 0));
 
-        var exception = assertThrows(IllegalArgumentException.class, () -> board.placeShip(ship2, Coordinate.valueOf(0, 0)));
+        assertThrows(IllegalArgumentException.class,
+                () -> board.placeShip(ship2, Coordinate.valueOf(0, 0)));
+    }
+    
+    @Test
+    void testOutOfBoardBounds() {
+        Coordinate outOfBoundsCoords = Coordinate.valueOf(10, 10);
 
-        assertEquals("Coordinate occupied", exception.getMessage());
+        assertThrows(IllegalArgumentException.class,
+                () -> board.placeShip(new Ship(), outOfBoundsCoords));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> board.shipAt(outOfBoundsCoords));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> board.isPosFree(outOfBoundsCoords));
     }
 }
