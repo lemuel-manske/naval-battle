@@ -26,41 +26,34 @@ class GameTest {
 
     @Test
     void testPositionFreeWhenEmptyBoard() {
-        Coordinate c = new Coordinate(1,2);
-        assertFalse(board.isPosFree(c));
+        assertFalse(board.isPosFree(Coordinate.valueOf(1,2)));
     }
     
     @Test
     void testPlaceShipThenPositionNotFree() {
         Ship ship = new Ship();
 
-        Coordinate start = new Coordinate(0, 0);
+        board.placeShip(ship, Coordinate.valueOf(0, 0));
 
-        board.placeShip(ship, start);
-
-        assertTrue(board.isPosFree(start));
+        assertTrue(board.isPosFree(Coordinate.valueOf(0, 0)));
     }
 
     @Test
     void testShipAtPositionAfterPlacing() {
         Ship ship = new Ship();
 
-        Coordinate start = new Coordinate(0, 0);
+        board.placeShip(ship, Coordinate.valueOf(0, 0));
 
-        board.placeShip(ship, start);
-
-        assertSame(ship, board.shipAt(start));
+        assertSame(ship, board.shipAt(Coordinate.valueOf(0, 0)));
     }
     @Test
     void testCannotPlaceShipOnOccupiedPosition() {
         Ship ship1 = new Ship();
         Ship ship2 = new Ship();
 
-        Coordinate coords = new Coordinate(0, 0);
+        board.placeShip(ship1, Coordinate.valueOf(0, 0));
 
-        board.placeShip(ship1, coords);
-
-        var exception = assertThrows(IllegalArgumentException.class, () -> board.placeShip(ship2, coords));
+        var exception = assertThrows(IllegalArgumentException.class, () -> board.placeShip(ship2, Coordinate.valueOf(0, 0)));
 
         assertEquals("Coordinate occupied", exception.getMessage());
     }
