@@ -14,14 +14,14 @@ public class Board {
         this.board = new Ship[size][size];
     }
 
-    public boolean isPosFree(final Coordinate c) {
+    public boolean isOccupied(final Coordinate c) {
         requireInBounds(c);
 
-        return board[c.x()][c.y()] == null;
+        return board[c.x()][c.y()] != null;
     }
 
     public void placeShip(final Ship ship, final Coordinate c) {
-        if (!isPosFree(c)) {
+        if (isOccupied(c)) {
             throw new IllegalArgumentException("Coordinate occupied");
         }
 
