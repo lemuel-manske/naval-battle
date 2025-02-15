@@ -6,7 +6,7 @@ public class Board {
     private final Ship[][] board;
 
     public Board() {
-        this(9);
+        this(10);
     }
 
     public Board(int size) {
@@ -25,7 +25,11 @@ public class Board {
             throw new IllegalArgumentException("Coordinate occupied");
         }
 
-        board[c.x()][c.y()] = ship;
+        int pos = c.x();
+
+        do {
+            board[pos++][c.y()] = ship;
+        } while (pos < c.x() + ship.size());
     }
 
     public Ship shipAt(final Coordinate c) {
@@ -35,7 +39,7 @@ public class Board {
     }
 
     private void requireInBounds(Coordinate c) {
-        if (c.x() > size || c.y() > size) {
+        if (c.x() >= size || c.y() >= size) {
             throw  new IllegalArgumentException("Coordinate out of bounds");
         }
     }

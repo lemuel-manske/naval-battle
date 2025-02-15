@@ -3,8 +3,8 @@ package io.navalbattle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,17 +19,12 @@ class GameTest {
     }
 
     @Test
-    void testCreateBoard() {
+    void shouldCreateABoard() {
         assertNotNull(board);
-    }
-
-    @Test
-    void testPositionFreeWhenEmptyBoard() {
-        assertFalse(board.isOccupied(Coordinate.valueOf(1,2)));
     }
     
     @Test
-    void testPlaceShipThenPositionNotFree() {
+    void whenShipIsPlacedAt00Then00IsOccupied() {
         Ship ship = Ship.Boat();
 
         board.placeShip(ship, Coordinate.valueOf(0, 0));
@@ -38,7 +33,7 @@ class GameTest {
     }
 
     @Test
-    void testShipAtPositionAfterPlacing() {
+    void whenShipIsPlacedThenItIsAtPosition() {
         Ship ship = Ship.Boat();
 
         board.placeShip(ship, Coordinate.valueOf(0, 0));
@@ -47,7 +42,7 @@ class GameTest {
     }
 
     @Test
-    void testCannotPlaceShipOnOccupiedPosition() {
+    void shouldThrowWhenTryingToPlaceShipAtOccupiedPosition() {
         Ship ship1 = Ship.Boat();
 
         board.placeShip(ship1, Coordinate.valueOf(0, 0));
@@ -59,7 +54,7 @@ class GameTest {
     }
     
     @Test
-    void testOutOfBoardBounds() {
+    void shouldBeOutOfBoundsFor1010() {
         Coordinate outOfBoundsCoords = Coordinate.valueOf(10, 10);
 
         assertThrows(IllegalArgumentException.class,
@@ -73,7 +68,7 @@ class GameTest {
     }
 
     @Test
-    void testPlaceShipsAtDifferentPositions() {
+    void shouldPlaceShipsSideBySide() {
         Ship ship1 = Ship.Boat();
 
         board.placeShip(ship1, Coordinate.valueOf(0,0));
@@ -84,5 +79,27 @@ class GameTest {
 
         assertSame(ship1, board.shipAt(Coordinate.valueOf(0,0)));
         assertSame(ship2, board.shipAt(Coordinate.valueOf(1,0)));
+    }
+
+    @Test
+    void shouldPlaceSubmarine() {
+        Ship submarine = Ship.Submarine();
+
+        board.placeShip(submarine, Coordinate.valueOf(0, 0));
+
+        assertSame(submarine, board.shipAt(Coordinate.valueOf(0, 0)));
+        assertSame(submarine, board.shipAt(Coordinate.valueOf(1, 0)));
+
+        assertNull(board.shipAt(Coordinate.valueOf(2, 0)));
+    }
+
+    @Test
+    void shouldPlaceSubmarineAtNearEnd() {
+        Ship submarine = Ship.Submarine();
+
+        board.placeShip(submarine, Coordinate.valueOf(8, 9));
+
+        assertSame(submarine, board.shipAt(Coordinate.valueOf(8, 9)));
+        assertSame(submarine, board.shipAt(Coordinate.valueOf(9, 9)));
     }
 }
