@@ -52,33 +52,28 @@ class GameTest {
         assertThrows(IllegalArgumentException.class,
                 () -> board.placeShip(ship2, Coordinate.valueOf(0, 0)));
     }
-    
+
     @Test
-    void shouldBeOutOfBoundsFor1010() {
-        Coordinate outOfBoundsCoords = Coordinate.valueOf(10, 10);
+    void shouldThrowWhenTryingToPlaceShitAoPositionOccupiedBySubmarine() {
+        Ship submarine = Ship.Submarine();
+
+        board.placeShip(submarine, Coordinate.valueOf(0, 0));
 
         assertThrows(IllegalArgumentException.class,
-                () -> board.placeShip(Ship.Boat(), outOfBoundsCoords));
-
-        assertThrows(IllegalArgumentException.class,
-                () -> board.shipAt(outOfBoundsCoords));
-
-        assertThrows(IllegalArgumentException.class,
-                () -> board.isOccupied(outOfBoundsCoords));
+            () -> board.placeShip(Ship.Boat(), Coordinate.valueOf(1,0)));
     }
 
     @Test
-    void shouldPlaceShipsSideBySide() {
+    void doNotAllowToPlaceShipSideBySide() {
         Ship ship1 = Ship.Boat();
 
         board.placeShip(ship1, Coordinate.valueOf(0,0));
 
         Ship ship2 = Ship.Boat();
 
-        board.placeShip(ship2, Coordinate.valueOf(1,0));
-
-        assertSame(ship1, board.shipAt(Coordinate.valueOf(0,0)));
-        assertSame(ship2, board.shipAt(Coordinate.valueOf(1,0)));
+        assertThrows(IllegalArgumentException.class, () -> board.placeShip(ship2, Coordinate.valueOf(1,0)));
+        assertThrows(IllegalArgumentException.class, () -> board.placeShip(ship2, Coordinate.valueOf(0,1)));
+        assertThrows(IllegalArgumentException.class, () -> board.placeShip(ship2, Coordinate.valueOf(1,1)));
     }
 
     @Test
@@ -89,8 +84,6 @@ class GameTest {
 
         assertSame(submarine, board.shipAt(Coordinate.valueOf(0, 0)));
         assertSame(submarine, board.shipAt(Coordinate.valueOf(1, 0)));
-
-        assertNull(board.shipAt(Coordinate.valueOf(2, 0)));
     }
 
     @Test

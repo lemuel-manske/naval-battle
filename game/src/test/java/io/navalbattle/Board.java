@@ -21,16 +21,23 @@ public class Board {
     }
 
     public void placeShip(final Ship ship, final Coordinate c) {
-        if (isOccupied(c)) {
-            throw new IllegalArgumentException("Coordinate occupied");
-        }
-
         int pos = c.x();
 
         do {
+            if (board[pos][c.y()] != null && !board[pos][c.y()].equals(ship)) {
+                throw new IllegalArgumentException("Coordinate occupied");
+            }
+
+            for (int i = c.y() - 1; i < c.y() + 1; i++) {
+                if (i < 0f) continue;
+                if (i >= size-1) break;
+                board[pos][i] = ship;
+            }
+
             board[pos++][c.y()] = ship;
         } while (pos < c.x() + ship.size());
     }
+
 
     public Ship shipAt(final Coordinate c) {
         requireInBounds(c);
